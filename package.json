@@ -48,8 +48,7 @@
     },
     "lint-staged": {
       "*.{js,ts,tsx}": [
-        "npm test",
-        "git add"
+        "jest --findRelatedTests"
       ]
     }
 }

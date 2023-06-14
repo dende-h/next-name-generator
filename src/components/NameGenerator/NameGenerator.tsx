@@ -15,6 +15,7 @@ const NameGenerator = () => {
     const data = await response.json();
     setOutputName(data.name);
   };
+  
 
   return (
     <Box bg={bgColor} p={4} borderRadius="md">
