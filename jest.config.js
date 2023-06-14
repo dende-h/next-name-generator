@@ -1,4 +1,5 @@
 module.exports = {
+    preset: 'ts-jest',
     roots: ["<rootDir>/src"],
     moduleFileExtensions: ["js", "jsx", "ts", "tsx", "json"],
     transform: {
