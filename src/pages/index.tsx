@@ -2,8 +2,8 @@
 import React from "react";
 import { DarkModeSwitch } from "@/components/DarkModeSwitch";
 import { Container, VStack } from "@chakra-ui/react";
-import NameGenerator from "../components/NameGenerator";
-import ThemeGenerator from "../components/ThemeGenerator";
+import NameGenerator from "../components/NameGenerator/NameGenerator";
+import ThemeGenerator from "../components/ThemeGenerator/ThemeGenerator";
 
 const IndexPage = () => {
   return (

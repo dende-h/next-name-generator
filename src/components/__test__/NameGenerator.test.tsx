@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import NameGenerator from "../NameGenerator";
+import NameGenerator from "../NameGenerator/NameGenerator";
 
 
 test("renders NameGenerator component", () => {
