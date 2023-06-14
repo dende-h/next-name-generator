@@ -1,4 +1,5 @@
 // IndexPage.js
+import React from "react";
 import { DarkModeSwitch } from "@/components/DarkModeSwitch";
 import { Container, VStack } from "@chakra-ui/react";
 import NameGenerator from "../components/NameGenerator";
