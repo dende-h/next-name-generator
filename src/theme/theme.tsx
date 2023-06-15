@@ -50,9 +50,6 @@ const theme = extendTheme({
 				color: mode("gray.600", "gray.200")(props),
 				bgColor: mode("gray.200", "gray.500")(props),
 				fontFamily: "body"
-			},
-			select: {
-				bgColor: mode("gray.300", "gray.600")(props)
 			}
 		})
 	}

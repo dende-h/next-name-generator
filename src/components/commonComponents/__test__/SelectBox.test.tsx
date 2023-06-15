@@ -5,7 +5,12 @@ import { SelectBox } from "../SelectBox";
 describe("SelectBox", () => {
 	it("適切なプレースホルダーをレンダリングする", () => {
 		const { getByRole } = render(
-			<SelectBox placeholder="選択してください" onChange={() => {}} children={<option value="option">Option</option>} />
+			<SelectBox
+				placeholder="選択してください"
+				onChange={() => {}}
+				children={<option value="option">Option</option>}
+				label="テスト"
+			/>
 		);
 
 		// Selectコンポーネントのプレースホルダーをチェックする
@@ -16,7 +21,7 @@ describe("SelectBox", () => {
 	it("オプションが選択された時にonChangeハンドラを呼び出す", () => {
 		const mockOnChange = jest.fn();
 		const { getByRole } = render(
-			<SelectBox placeholder="選択してください" onChange={mockOnChange}>
+			<SelectBox placeholder="選択してください" onChange={mockOnChange} label="テスト">
 				<option value="option1">Option 1</option>
 				<option value="option2">Option 2</option>
 			</SelectBox>
@@ -34,7 +39,7 @@ describe("SelectBox", () => {
 	// 新たに追加するテストケース
 	it("全てのオプションが適切にレンダリングされている", () => {
 		const { getAllByRole } = render(
-			<SelectBox placeholder="選択してください" onChange={() => {}}>
+			<SelectBox placeholder="選択してください" onChange={() => {}} label="テスト">
 				<option value="option1">Option 1</option>
 				<option value="option2">Option 2</option>
 			</SelectBox>
@@ -53,7 +58,7 @@ describe("SelectBox", () => {
 	it("onChangeハンドラに適切な値が渡される", () => {
 		const mockOnChange = jest.fn();
 		const { getByRole } = render(
-			<SelectBox placeholder="選択してください" onChange={mockOnChange}>
+			<SelectBox placeholder="選択してください" onChange={mockOnChange} label="テスト">
 				<option value="option1">Option 1</option>
 				<option value="option2">Option 2</option>
 			</SelectBox>
@@ -71,7 +76,7 @@ describe("SelectBox", () => {
 
 	it("正しくレンダリングされる", () => {
 		const { getByRole } = render(
-			<SelectBox placeholder="選択してください" onChange={() => {}}>
+			<SelectBox placeholder="選択してください" onChange={() => {}} label="テスト">
 				<option value="option1">Option 1</option>
 			</SelectBox>
 		);

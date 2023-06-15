@@ -16,7 +16,7 @@ const ThemeGenerator = () => {
 	const genre = useChangeSelectBox();
 
 	//APIデータ取得のフック
-	const { outputTheme, fetchRandomTheme } = useFetchRandomTheme();
+	const { outputTheme, fetchRandomTheme, isLoading } = useFetchRandomTheme();
 
 	//ボタンのDisable制御
 	const { isUndefined, onCheckValue } = useCheckValueUndefined();
@@ -33,17 +33,23 @@ const ThemeGenerator = () => {
 				<Text fontSize="2xl" fontWeight="bold" color={useColorModeValue("gray.800", "white")}>
 					テーマジェネレーター
 				</Text>
-				<SelectBox placeholder={"小説のジャンルを選択"} onChange={(e) => genre.onChangeSelectValue(e)}>
+				<SelectBox
+					placeholder={"ジャンルを選択"}
+					onChange={(e) => genre.onChangeSelectValue(e)}
+					label="《小説ジャンル》"
+				>
 					<SelectOption selectOptions={selectGenre} />
 				</SelectBox>
 				<Button
 					onClick={() => {
 						fetchRandomTheme({ genre: genre.selectValue });
 					}}
-					colorScheme="teal"
+					colorScheme={isUndefined ? "red" : "teal"}
 					isDisabled={isUndefined}
-					value={"ランダムな小説のテーマを生成"}
-				/>
+					isLoading={isLoading}
+				>
+					{isUndefined ? "ジャンルを選択" : "小説のテーマを生成"}
+				</Button>
 				<ThemeOutput theme={outputTheme} />
 			</VStack>
 		</Box>

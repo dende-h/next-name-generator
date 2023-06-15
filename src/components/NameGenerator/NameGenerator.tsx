@@ -30,7 +30,7 @@ const NameGenerator = () => {
 	const bgColor = useColorModeValue("gray.200", "gray.700");
 
 	//APIデータ取得のフック
-	const { outputName, fetchRandomName } = useFetchRandomName();
+	const { outputName, fetchRandomName, isLoading } = useFetchRandomName();
 
 	return (
 		<Box bg={bgColor} p={4} borderRadius="md">
@@ -38,18 +38,24 @@ const NameGenerator = () => {
 				<Text as={"h2"} fontSize="2xl" fontWeight="bold" color={useColorModeValue("gray.800", "white")}>
 					名前ジェネレーター
 				</Text>
-				<SelectBox placeholder="言語を選択" onChange={(e) => language.onChangeSelectValue(e)}>
+				<SelectBox placeholder="言語を選択" onChange={(e) => language.onChangeSelectValue(e)} label="≪名前の言語≫">
 					<SelectOption selectOptions={selectLanguage} />
 				</SelectBox>
-				<SelectBox placeholder="名前のテーマを選択" onChange={(e) => nameTheme.onChangeSelectValue(e)}>
+				<SelectBox
+					placeholder="カテゴリを選択"
+					onChange={(e) => nameTheme.onChangeSelectValue(e)}
+					label="≪名前のカテゴリ≫"
+				>
 					<SelectOption selectOptions={selectNameTheme} />
 				</SelectBox>
 				<Button
 					onClick={() => fetchRandomName({ language: language.selectValue, nameTheme: nameTheme.selectValue })}
-					colorScheme={isUndefined ? "gray" : "teal"}
-					value={"ランダムな名前を生成"}
+					colorScheme={isUndefined ? "red" : "teal"}
 					isDisabled={isUndefined}
-				/>
+					isLoading={isLoading}
+				>
+					{isUndefined ? "言語とカテゴリを選択" : "名前を生成"}
+				</Button>
 				<NameOutput name={outputName} />
 			</VStack>
 		</Box>

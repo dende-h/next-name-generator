@@ -11,7 +11,7 @@ export type ThemeFetchApiParameters = {
 
 // 取得したレスポンスの型
 export type ApiResponseRandomTheme = {
-	theme: string[];
+	themes: string[];
 };
 
 //データを取得する関数の型
