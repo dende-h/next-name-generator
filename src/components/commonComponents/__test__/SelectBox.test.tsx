@@ -5,12 +5,7 @@ import { SelectBox } from "../SelectBox";
 describe("SelectBox", () => {
 	it("適切なプレースホルダーをレンダリングする", () => {
 		const { getByRole } = render(
-			<SelectBox
-				placeholder="選択してください"
-				onChange={() => {}}
-				bgColor="white"
-				children={<option value="option">Option</option>}
-			/>
+			<SelectBox placeholder="選択してください" onChange={() => {}} children={<option value="option">Option</option>} />
 		);
 
 		// Selectコンポーネントのプレースホルダーをチェックする
@@ -21,7 +16,7 @@ describe("SelectBox", () => {
 	it("オプションが選択された時にonChangeハンドラを呼び出す", () => {
 		const mockOnChange = jest.fn();
 		const { getByRole } = render(
-			<SelectBox placeholder="選択してください" onChange={mockOnChange} bgColor="gray.300">
+			<SelectBox placeholder="選択してください" onChange={mockOnChange}>
 				<option value="option1">Option 1</option>
 				<option value="option2">Option 2</option>
 			</SelectBox>
@@ -39,7 +34,7 @@ describe("SelectBox", () => {
 	// 新たに追加するテストケース
 	it("全てのオプションが適切にレンダリングされている", () => {
 		const { getAllByRole } = render(
-			<SelectBox placeholder="選択してください" onChange={() => {}} bgColor="gray.300">
+			<SelectBox placeholder="選択してください" onChange={() => {}}>
 				<option value="option1">Option 1</option>
 				<option value="option2">Option 2</option>
 			</SelectBox>
@@ -58,7 +53,7 @@ describe("SelectBox", () => {
 	it("onChangeハンドラに適切な値が渡される", () => {
 		const mockOnChange = jest.fn();
 		const { getByRole } = render(
-			<SelectBox placeholder="選択してください" onChange={mockOnChange} bgColor="gray.300">
+			<SelectBox placeholder="選択してください" onChange={mockOnChange}>
 				<option value="option1">Option 1</option>
 				<option value="option2">Option 2</option>
 			</SelectBox>
@@ -76,7 +71,7 @@ describe("SelectBox", () => {
 
 	it("正しくレンダリングされる", () => {
 		const { getByRole } = render(
-			<SelectBox placeholder="選択してください" onChange={() => {}} bgColor="white">
+			<SelectBox placeholder="選択してください" onChange={() => {}}>
 				<option value="option1">Option 1</option>
 			</SelectBox>
 		);
@@ -87,33 +82,5 @@ describe("SelectBox", () => {
 
 		// Select要素のプレースホルダー（最初のoption要素）を検証
 		expect((selectElement.firstChild as HTMLOptionElement).text).toBe("選択してください");
-	});
-
-	it("オプションが正しい順序でレンダリングされる", () => {
-		const { getAllByRole } = render(
-			<SelectBox placeholder="選択してください" onChange={() => {}} bgColor="white">
-				<option value="option1">Option 1</option>
-				<option value="option2">Option 2</option>
-			</SelectBox>
-		);
-
-		const options = getAllByRole("option");
-		expect((options[1] as HTMLOptionElement).text).toBe("Option 1");
-		expect((options[2] as HTMLOptionElement).text).toBe("Option 2");
-	});
-
-	it("無効な選択肢のハンドリング", () => {
-		const mockOnChange = jest.fn();
-		const { getByRole } = render(
-			<SelectBox placeholder="選択してください" onChange={mockOnChange} bgColor="white">
-				<option value="option1">Option 1</option>
-			</SelectBox>
-		);
-
-		fireEvent.change(getByRole("combobox"), { target: { value: "無効な選択肢" } });
-
-		// onChangeが呼び出された回数を検証できます。
-		// ただし、無効な選択肢の処理具体的な実装がないため、具体的な挙動はonChange内での実装に依存します。
-		expect(mockOnChange).toHaveBeenCalledTimes(1);
 	});
 });

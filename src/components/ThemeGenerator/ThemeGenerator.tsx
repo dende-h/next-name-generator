@@ -1,17 +1,31 @@
-import React from "react";
-import { useState } from "react";
+import React, { useEffect } from "react";
 import { Box, Button, Text, VStack, useColorModeValue } from "@chakra-ui/react";
 import { ThemeOutput } from "./ThemeOutput";
+import { useCheckValueUndefined } from "../commonComponents/hooks/useCheckValueUndefined";
+import { SelectBox } from "../commonComponents/SelectBox";
+import { SelectOption } from "../commonComponents/SelectOption";
+import { themeGeneratorLanguageSelectOptionContentArray } from "./content/themeGeneratorSelectOptionContent";
+import { useChangeSelectBox } from "../commonComponents/hooks/useChangeSelectBox";
+import { useFetchRandomTheme } from "./hooks/useFetchRandomTheme";
 
 const ThemeGenerator = () => {
-	const [outputNovelThemes, setOutputNovelThemes] = useState(["", "", ""]);
-	const bgColor = useColorModeValue("gray.200", "gray.700");
+	//セレクトボックスに設定する選択肢の取得
+	const selectGenre = themeGeneratorLanguageSelectOptionContentArray;
 
-	const fetchRandomNovelThemes = async () => {
-		const response = await fetch(`/api/novel-theme`);
-		const data = await response.json();
-		setOutputNovelThemes(data.themes);
-	};
+	//セレクトボックスの値を変更するフック
+	const genre = useChangeSelectBox();
+
+	//APIデータ取得のフック
+	const { outputTheme, fetchRandomTheme } = useFetchRandomTheme();
+
+	//ボタンのDisable制御
+	const { isUndefined, onCheckValue } = useCheckValueUndefined();
+	useEffect(() => {
+		onCheckValue({ value1: genre.selectValue });
+	}, [genre.selectValue]);
+
+	//ダーク対応のバックグラウンドカラー
+	const bgColor = useColorModeValue("gray.200", "gray.700");
 
 	return (
 		<Box bg={bgColor} p={4} borderRadius="md">
@@ -19,12 +33,18 @@ const ThemeGenerator = () => {
 				<Text fontSize="2xl" fontWeight="bold" color={useColorModeValue("gray.800", "white")}>
 					テーマジェネレーター
 				</Text>
-				<Button onClick={fetchRandomNovelThemes} colorScheme="teal">
-					ランダムな小説のテーマを生成
-				</Button>
-				<ThemeOutput theme={outputNovelThemes[0]} />
-				<ThemeOutput theme={outputNovelThemes[1]} />
-				<ThemeOutput theme={outputNovelThemes[2]} />
+				<SelectBox placeholder={"小説のジャンルを選択"} onChange={(e) => genre.onChangeSelectValue(e)}>
+					<SelectOption selectOptions={selectGenre} />
+				</SelectBox>
+				<Button
+					onClick={() => {
+						fetchRandomTheme({ genre: genre.selectValue });
+					}}
+					colorScheme="teal"
+					isDisabled={isUndefined}
+					value={"ランダムな小説のテーマを生成"}
+				/>
+				<ThemeOutput theme={outputTheme} />
 			</VStack>
 		</Box>
 	);

@@ -5,22 +5,14 @@ import { ChakraProvider } from "@chakra-ui/react";
 
 describe("ThemeOutput コンポーネント", () => {
 	it("テーマが正しくレンダリングされる", () => {
-		const theme = "テストテーマ";
+		const theme = ["テストテーマ1", "テストテーマ2", "テストテーマ3"];
 		render(
 			<ChakraProvider>
 				<ThemeOutput theme={theme} />
 			</ChakraProvider>
 		);
-		expect(screen.getByText(`生成された小説のテーマ: ${theme}`)).toBeInTheDocument();
-	});
-
-	it("正しいテーマが渡された場合、そのテーマが表示される", () => {
-		const theme = "更新されたテーマ";
-		render(
-			<ChakraProvider>
-				<ThemeOutput theme={theme} />
-			</ChakraProvider>
-		);
-		expect(screen.getByText(`生成された小説のテーマ: ${theme}`)).toBeInTheDocument();
+		expect(
+			screen.getByText(`生成テーマ:ジャンル:${theme[0]},ストーリー:${theme[1]},汎用:${theme[2]}`)
+		).toBeInTheDocument();
 	});
 });

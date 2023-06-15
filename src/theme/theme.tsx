@@ -1,14 +1,12 @@
 import { extendTheme, StyleFunctionProps, ThemeConfig } from "@chakra-ui/react";
 import { mode } from "@chakra-ui/theme-tools";
 
-
 const breakpoints = {
 	sm: "40em",
 	md: "52em",
 	lg: "64em",
 	xl: "80em"
 };
-
 
 const config: ThemeConfig = {
 	initialColorMode: "light",
@@ -52,6 +50,9 @@ const theme = extendTheme({
 				color: mode("gray.600", "gray.200")(props),
 				bgColor: mode("gray.200", "gray.500")(props),
 				fontFamily: "body"
+			},
+			select: {
+				bgColor: mode("gray.300", "gray.600")(props)
 			}
 		})
 	}

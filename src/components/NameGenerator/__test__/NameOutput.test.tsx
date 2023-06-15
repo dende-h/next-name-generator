@@ -6,6 +6,6 @@ describe("NameOutput", () => {
 	it("正しい名前をレンダリングする", () => {
 		const { getByText } = render(<NameOutput name="テスト名" />);
 
-		expect(getByText("生成された名前: テスト名")).toBeInTheDocument();
+		expect(getByText("生成名:テスト名")).toBeInTheDocument();
 	});
 });

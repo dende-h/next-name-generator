@@ -1,27 +1,24 @@
-import { NextApiRequest, NextApiResponse } from 'next';
+import { AllNamesData, ResponseNamesData } from "../../components/NameGenerator/Types/nameGeneratorTypes";
+import { NAMES } from "../../components/NameGenerator/content/nameGenerarotResponseData";
+import { NextApiRequest, NextApiResponse } from "next";
 
-const NAMES = {
-  english: {
-    flowers: ['Rose', 'Lily', 'Daisy', 'Ivy', 'Violet'],
-    minerals: ['Diamond', 'Emerald', 'Ruby', 'Amethyst', 'Opal']
-  },
-  japanese: {
-    flowers: ['Sakura', 'Ume', 'Tsubaki', 'Suisen', 'Kiku'],
-    minerals: ['Magano', 'Emerarudo', 'Rubii', 'Ametisuto', 'Opāru']
-  }
-};
+const Names = NAMES;
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
-  const language = Array.isArray(req.query.language) ? req.query.language[0] : req.query.language;
-  const theme = Array.isArray(req.query.theme) ? req.query.theme[0] : req.query.theme;
-  
-  if (!language || !theme || !NAMES[language as keyof typeof NAMES] || !NAMES[language as keyof typeof NAMES][theme as keyof typeof NAMES['english']]) {
-    res.status(400).send('Invalid language or theme');
-    return;
-  }
+	const { language, theme } = req.query;
 
-  const names = NAMES[language as keyof typeof NAMES][theme as keyof typeof NAMES['english']];
-  const randomName = names[Math.floor(Math.random() * names.length)];
+	if (
+		typeof language !== "string" ||
+		typeof theme !== "string" ||
+		!Names[language as keyof AllNamesData] ||
+		!Names[language as keyof AllNamesData][theme as keyof ResponseNamesData]
+	) {
+		res.status(400).send("Invalid language or theme");
+		return;
+	}
 
-  res.status(200).json({ name: randomName });
+	const names = NAMES[language as keyof AllNamesData][theme as keyof ResponseNamesData];
+	const randomName = names[Math.floor(Math.random() * names.length)];
+
+	res.status(200).json({ name: randomName });
 }

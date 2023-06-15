@@ -1,9 +1,9 @@
 module.exports = {
 	preset: 'ts-jest',
 	roots: ['<rootDir>/src'],
-	moduleFileExtensions: ['js', 'jsx', 'ts', 'tsx', 'json'],
+	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
 	transform: {
-		'^.+\\.(ts|tsx)$': 'ts-jest'
+		'^.+\\.(ts|tsx)$': 'babel-jest'
 	},
 	setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
 	testPathIgnorePatterns: ['/node_modules/', '/.next/'],
