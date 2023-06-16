@@ -1,7 +1,6 @@
 import React from "react";
-import { render, fireEvent } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import { useButtonDisable } from "../useButtonDisable";
-import { act } from "react-dom/test-utils";
 
 // モックのButtonコンポーネント（isDisabledをテストするため）
 const Button = ({ isDisabled, children }: { isDisabled: boolean; children: string }) => (
@@ -14,21 +13,18 @@ const Wrapper = ({ value }: { value: string | undefined }) => {
 	return <Button isDisabled={isDisabled}>Test</Button>;
 };
 
-describe("useButtonDisable custom hook", () => {
-	// テストケース1: valueがstring値のとき、ボタンは有効化されていること
-	it("should enable the button when value is a string", () => {
+describe("useButtonDisableカスタムフックの動作", () => {
+	it("valueがstring値のとき、ボタンは有効化されていること", () => {
 		const { getByText } = render(<Wrapper value="test" />);
 		expect(getByText("Test")).not.toBeDisabled();
 	});
 
-	// テストケース2: valueがundefinedのとき、ボタンは無効化されていること
-	it("should disable the button when value is undefined", () => {
+	it("valueがundefinedのとき、ボタンは無効化されていること", () => {
 		const { getByText } = render(<Wrapper value={undefined} />);
 		expect(getByText("Test")).toBeDisabled();
 	});
 
-	// テストケース3: valueの値がundefinedとstring値で変わったとき、ボタンの有効化が切り替わること
-	it("should switch the button enabled/disabled when value changes between undefined and a string value", () => {
+	it("valueの値がundefinedとstring値で変わったとき、ボタンの有効化が切り替わること", () => {
 		const { getByText, rerender } = render(<Wrapper value={undefined} />);
 		// 初めは無効化
 		expect(getByText("Test")).toBeDisabled();
