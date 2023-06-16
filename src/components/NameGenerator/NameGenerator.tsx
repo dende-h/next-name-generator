@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Text, VStack, useColorModeValue } from "@chakra-ui/react";
 import { SelectBox } from "../commonComponents/SelectBox";
 import { NameOutput } from "./NameOutput";
@@ -9,7 +9,7 @@ import {
 } from "./content/nameGeneratorSelectOptionContent";
 import { useChangeSelectBox } from "../commonComponents/hooks/useChangeSelectBox";
 import { useFetchRandomName } from "./hooks/useFetchRandomName";
-import { useCheckValueUndefined } from "../commonComponents/hooks/useCheckValueUndefined";
+import { useButtonDisable } from "../commonComponents/hooks/useButtonDisable";
 
 const NameGenerator = () => {
 	//セレクトボックスに設定する選択肢の取得
@@ -21,10 +21,8 @@ const NameGenerator = () => {
 	const nameTheme = useChangeSelectBox();
 
 	//ボタンのDisable制御
-	const { isUndefined, onCheckValue } = useCheckValueUndefined();
-	useEffect(() => {
-		onCheckValue({ value1: language.selectValue, value2: nameTheme.selectValue });
-	}, [language.selectValue, nameTheme.selectValue]);
+	const isDisableLanguage = useButtonDisable(language.selectValue);
+	const isDisableNameTheme = useButtonDisable(nameTheme.selectValue);
 
 	//ダーク対応のバックグラウンドカラー
 	const bgColor = useColorModeValue("gray.200", "gray.700");
@@ -50,11 +48,11 @@ const NameGenerator = () => {
 				</SelectBox>
 				<Button
 					onClick={() => fetchRandomName({ language: language.selectValue, nameTheme: nameTheme.selectValue })}
-					colorScheme={isUndefined ? "red" : "teal"}
-					isDisabled={isUndefined}
+					colorScheme={isDisableLanguage || isDisableNameTheme ? "red" : "teal"}
+					isDisabled={isDisableLanguage || isDisableNameTheme}
 					isLoading={isLoading}
 				>
-					{isUndefined ? "言語とカテゴリを選択" : "名前を生成"}
+					{isDisableLanguage || isDisableNameTheme ? "言語とカテゴリを選択" : "名前を生成"}
 				</Button>
 				<NameOutput name={outputName} />
 			</VStack>

@@ -11,8 +11,6 @@ describe("ThemeOutput コンポーネント", () => {
 				<ThemeOutput theme={theme} />
 			</ChakraProvider>
 		);
-		expect(
-			screen.getByText(`生成テーマ:ジャンル:${theme[0]},ストーリー:${theme[1]},汎用:${theme[2]}`)
-		).toBeInTheDocument();
+		expect(screen.getByText(`生成テーマ：【${theme[0]}】,【${theme[1]}】,【${theme[2]}】`)).toBeInTheDocument();
 	});
 });

@@ -1,23 +1,9 @@
-// TestComponent.js
-import React, { useEffect } from "react";
-import { useCheckValueUndefined } from "../useCheckValueUndefined";
-import { Box, Select, Text } from "@chakra-ui/react";
+import React from "react";
+import { Box, Button, Select, Text } from "@chakra-ui/react";
 import { useChangeSelectBox } from "../useChangeSelectBox";
+import { useButtonDisable } from "../useButtonDisable";
 
-type TestProps = {
-	value1: string | undefined;
-	value2?: string | undefined;
-};
-
-export const TestComponent = ({ value1, value2 }: TestProps) => {
-	const { isUndefined, onCheckValue } = useCheckValueUndefined();
-
-	useEffect(() => {
-		onCheckValue({ value1, value2 });
-	}, [value1, value2]);
-
-	return <div>{isUndefined ? "true" : "false"}</div>;
-};
+type TestValue = string | undefined;
 
 export const TestSelectBox = () => {
 	const { selectValue, onChangeSelectValue } = useChangeSelectBox();
@@ -32,4 +18,10 @@ export const TestSelectBox = () => {
 			<Text>{selectValue ? selectValue : "undefined"}</Text>
 		</Box>
 	);
+};
+
+export const TestButton = (value: TestValue) => {
+	const isDisable = useButtonDisable(value);
+
+	return <Button isDisabled={isDisable}>Test</Button>;
 };
