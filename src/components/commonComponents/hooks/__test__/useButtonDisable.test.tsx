@@ -1,5 +1,5 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { act, render, renderHook } from "@testing-library/react";
 import { useButtonDisable } from "../useButtonDisable";
 
 // モックのButtonコンポーネント（isDisabledをテストするため）
@@ -33,5 +33,20 @@ describe("useButtonDisableカスタムフックの動作", () => {
 		rerender(<Wrapper value="test" />);
 		// 現在、有効化
 		expect(getByText("Test")).not.toBeDisabled();
+	});
+
+	//新しく追加したHooksのテスト
+	it("stringのvalueを渡すとfalseが返ること", () => {
+		const test = "testValue";
+		const { result } = renderHook(() => useButtonDisable(test));
+
+		expect(result.current).toBe(false);
+	});
+
+	it("undedinedを渡すとtrueが返ること", () => {
+		const test = undefined;
+		const { result } = renderHook(() => useButtonDisable(test));
+
+		expect(result.current).toBe(true);
 	});
 });
