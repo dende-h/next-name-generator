@@ -1,5 +1,5 @@
 import React from "react";
-import { render, fireEvent, waitFor } from "@testing-library/react";
+import { render, fireEvent, waitFor, renderHook, act } from "@testing-library/react";
 import { useChangeSelectBox } from "../useChangeSelectBox";
 import { Box, Select, Text } from "@chakra-ui/react";
 
@@ -19,12 +19,12 @@ const Wrapper = () => {
 };
 
 describe("useChangeSelectBoxのテスト", () => {
-	test("初期状態ではselectValueがundefinedであること", () => {
+	it("初期状態ではselectValueがundefinedであること", () => {
 		const { getByText } = render(<Wrapper />);
 		expect(getByText("undefined")).toBeInTheDocument();
 	});
 
-	test("selectの選択に応じてselectValueが更新されること", async () => {
+	it("selectの選択に応じてselectValueが更新されること", async () => {
 		const { getByText, getByRole } = render(<Wrapper />);
 		const selectElement = getByRole("combobox");
 
@@ -33,5 +33,14 @@ describe("useChangeSelectBoxのテスト", () => {
 		await waitFor(() => {
 			expect(getByText("test1")).toBeInTheDocument();
 		});
+	});
+
+	it("onChange関数が受け取った値をvalueとして返すこと", () => {
+		const test = { target: { value: "test" } } as React.ChangeEvent<HTMLSelectElement>;
+		const { result } = renderHook(() => useChangeSelectBox());
+
+		act(() => result.current.onChangeSelectValue(test));
+
+		expect(result.current.selectValue).toBe("test");
 	});
 });
